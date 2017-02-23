@@ -38,7 +38,7 @@
 }
 - (void)request{
 
-    
+    NSLog(@"0000");
     
 //    [BNHttp(@"GET")
 //     .url(@"http://www.xsdota.com").param(nil)
