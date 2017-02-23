@@ -38,9 +38,6 @@
 }
 - (void)request{
 
-//BNGetJsonData(@"http://api.breadtrip.com/v2/index/", nil, ^(id jsonData) {
-//    NSLog(@"jsonData :%@",jsonData);
-//});
     
     
 //    [BNHttp(@"GET")
