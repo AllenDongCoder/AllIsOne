@@ -7,7 +7,7 @@
 //
 
 #import "BNHttpClient.h"
-
+#import "UIImage+GIF.h"
 static NSString *DebugHost;
 static NSString *ServerHost;
 
@@ -64,7 +64,10 @@ typedef NS_ENUM(NSInteger, BNResponseSerializer){
     return ^BNHttpClient *(NSString *url){
 //        self.mUrl = url;
         self.mUrl = [[HTServerConfig getHTServerAddr] stringByAppendingString:url];
-        
+        if ([commonTool isIncludeChinese:self.mUrl]) {
+            self.mUrl = [self.mUrl stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]];
+            
+        }
          return self;
     };
 }
@@ -213,8 +216,16 @@ typedef NS_ENUM(NSInteger, BNResponseSerializer){
         case GET:{
             debugCallback(@"GET");
             [MMProgressHUD setPresentationStyle:MMProgressHUDPresentationStyleExpand];
-
-            [MMProgressHUD showWithTitle:nil status:@"加载中。。" image:nil];
+           
+//            [MMProgressHUD showWithTitle:@"" status:@"25%" cancelBlock:^{
+//                NSLog(@"cancel");
+//                
+//            } image:[UIImage sd_animatedGIFNamed:@"loading"]];
+            
+           
+            [MMProgressHUD showWithTitle:nil status:nil image:[UIImage sd_animatedGIFNamed:@"loading"]];
+             [[[MMProgressHUD sharedHUD] hud] setBackgroundColor:[UIColor clearColor]];
+            
             [client GET:self.mUrl parameters:self.mParameters success:^(NSURLSessionDataTask * _Nonnull task, id  _Nonnull responseObject) {
                 [MMProgressHUD dismiss];
                 completeOperate(responseObject);
@@ -227,8 +238,8 @@ typedef NS_ENUM(NSInteger, BNResponseSerializer){
             break;
         case POST:{
             debugCallback(@"POST");
-            [MMProgressHUD setPresentationStyle:MMProgressHUDPresentationStyleExpand];
-            [MMProgressHUD showWithTitle:nil status:@"加载中。。" image:nil];
+            [MMProgressHUD setPresentationStyle:MMProgressHUDPresentationStyleNone];
+            [MMProgressHUD showWithTitle:nil status:@"" image:[UIImage sd_animatedGIFNamed:@"loading"]];
             [client POST:self.mUrl parameters:self.mParameters success:^(NSURLSessionDataTask * _Nonnull task, id  _Nonnull responseObject) {
                 completeOperate(responseObject);
                 [MMProgressHUD dismiss];

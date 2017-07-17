@@ -36,14 +36,15 @@ NSString *const  WebViewTypekey = @"WebViewTypekey";
 NSString *const DataIndex = @"DataIndex";
 
 /********** 网络请求地址 ***********/
-
+//@"http://v3.wufazhuce.com:8000/api/onelist/3732/深圳";
+//http://v3.wufazhuce.com:8000/api/onelist/3732/%E6%B7%B1%E5%9C%B3%E5%B8%82
 // 服务地址
-NSString *const  HTURL = @"http://api.breadtrip.com";
+NSString *const  HTURL = @"http://v3.wufazhuce.com:8000";
 NSString *const  HTURL_Test = @"http://api.breadtrip.com";
 
 
 // 首页
-NSString *const  CityTravel_URL = @"/v2/index/";
+NSString *const  CityTravel_URL = @"/api/onelist/3773/深圳";
 
 // 发现
 NSString *const  Find_URL = @"/hunter/feeds/";

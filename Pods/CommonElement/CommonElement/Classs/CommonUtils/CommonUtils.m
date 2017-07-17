@@ -286,7 +286,6 @@ static CGRect oldframe;
     NSPredicate *chineseTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@",chineseStr];
     return [chineseTest evaluateWithObject:chineseName];
 }
-
 +(BOOL)isStrFitRegex:(NSString *)str regex:(NSString *)regex{
     NSPredicate *pwdTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@",regex];
     return [pwdTest evaluateWithObject:str];

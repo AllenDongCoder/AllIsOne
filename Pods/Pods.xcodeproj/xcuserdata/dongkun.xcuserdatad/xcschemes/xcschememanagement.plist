@@ -54,6 +54,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>SVProgressHUD.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>iCarousel.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -77,17 +82,12 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>1E18FD869F779C2D081314AC3D0B798E</key>
+		<key>3C4986ABA26AB9C4894BE7258C9AE2FF</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>730A6978D2C94C2444E72B48BC56F7DC</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>903920C9C7615DE6C7002302CFB6C4AB</key>
+		<key>42B5F4C540C326537D278FAF8EB8A20F</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -107,7 +107,17 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>9F60A772079977DA5AC6858DF2B50BA8</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>A316B54C67E947D23CECD230FA5BFAEF</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>D4A69B2FE51E16CBB5159E744DD1604C</key>
 		<dict>
 			<key>primary</key>
 			<true/>

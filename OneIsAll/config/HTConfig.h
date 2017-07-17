@@ -20,7 +20,7 @@
 #define SetAColor(r, g, b, a) [UIColor colorWithRed:(r)/255.0f green:(g)/255.0f blue:(b)/255.0f alpha:(a)]
 
 // 设置字体
-#define HTSetFont(fontName,font)    [UIFont fontWithName:(fontName) size:(font)]
+#define HTSetFont(fontName,fontSize)    [UIFont fontWithName:(fontName) size:(fontSize)]
 
 // 获取屏幕宽度，高度
 #define SCREEN_WIDTH ([UIScreen mainScreen].bounds.size.width)

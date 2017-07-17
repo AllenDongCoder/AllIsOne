@@ -10,5 +10,6 @@ pod 'MMProgressHUD', '0.3.2'
 pod 'SDWebImage', '3.8.2'
 pod 'iCarousel', '1.8.3'
 pod 'ReactiveCocoa', '2.5'
+pod 'SVProgressHUD', '2.1.2'
 
 end

@@ -10,8 +10,10 @@
 #import "TableBarConfigure.h"
 #import "HTServerConfig.h"
 #import "IQKeyboardManager.h"
-@interface AppDelegate ()
-
+#import "HTLBSManager.h"
+#import <CoreLocation/CoreLocation.h>
+@interface AppDelegate ()<HTLBSManagerDelegate>
+@property(nonatomic ,strong)HTLBSManager * manager ;
 @end
 
 @implementation AppDelegate
@@ -20,6 +22,8 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     [self setRootController];
     
+    HTLBSManager * manger  =   [HTLBSManager startGetLBSWithDelegate:self];
+    self.manager = manger;
     return YES;
 }
 - (void)setRootController{
@@ -40,6 +44,13 @@
     manager.shouldResignOnTouchOutside = YES;
     manager.shouldToolbarUsesTextFieldTintColor = YES;
     manager.enableAutoToolbar = NO;
+}
+#pragma mark - 定位信息
+- (void)getLbsSuccessWithLongitude:(NSString *)longitude latitude:(NSString *)latitude{
+    
+    NSLog(@"经度:%@--纬度:%@",longitude,latitude);
+    
+    
 }
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
