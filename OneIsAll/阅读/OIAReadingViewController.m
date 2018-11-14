@@ -18,11 +18,66 @@
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
     self.title =@"一个阅读";
-
+    UITextField * tf = [[UITextField alloc] initWithFrame:CGRectMake(30, 150, 100, 30)];
+    tf.placeholder = @"123";
+    [self.view addSubview:tf];
+    
+    
     UIButton * btn =[ UIButton buttonWithType:UIButtonTypeCustom];
+    [btn setTitle:@"按钮" forState:UIControlStateNormal];
+    [btn setBackgroundColor:[UIColor colorWithRed:58/255.0f green:157/255.0f blue:255/255.0f alpha:1.0f]];
     btn.frame =  CGRectMake(30, 100, 100, 30);
-    [btn setBackgroundColor:[UIColor greenColor]];
+    btn.titleLabel.font = [UIFont systemFontOfSize:18.0f];
+    btn.layer.cornerRadius = 6;
+    btn.layer.masksToBounds = YES;
+
     [self.view addSubview:btn];
+    
+    RACSignal * enAbleSingal = [tf.rac_textSignal map:^id(NSString * value) {
+        if (value.length > 2) {
+            return @1;
+        }else{
+            return @0;
+        }
+        
+    }];
+    
+//    [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
+//
+//        [subscriber sendNext:@0];
+//        [subscriber sendCompleted];
+//        return [RACDisposable disposableWithBlock:^{
+//
+//        }];
+//    }];
+   
+    RACSignal * countSinal = [[[[RACSignal interval:1
+                                        onScheduler:[RACScheduler mainThreadScheduler]]
+                                startWith:[NSDate date]]
+                               scanWithStart:@(60) reduce:^id(NSNumber *running, id next) {
+                                   return @(running.integerValue - 1);
+                               }] takeUntilBlock:^BOOL(NSNumber *x) {
+                                   return x.integerValue < 0;
+                               }];
+    RACSignal * (^ CountBlock)(UIButton *) = ^RACSignal *(UIButton * btn){
+        
+        return countSinal;
+    };
+    
+
+    btn.rac_command = [[RACCommand alloc] initWithEnabled:enAbleSingal signalBlock:^RACSignal *(id input) {
+        NSLog(@"input = %@",input);
+        return CountBlock(btn);
+        //        [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
+        //            NSLog(@"do something ");
+        //            [subscriber sendNext:@"something"];
+        //            [subscriber sendCompleted];
+        //            return  [RACDisposable disposableWithBlock:^{
+        //
+        //            }];
+        //        }];
+    }];
+    /**
     [[btn rac_signalForControlEvents:UIControlEventTouchUpInside]
     subscribeNext:^(id x) {
         TestViewController * tvc = [TestViewController new];
@@ -49,7 +104,7 @@
      
     
     }];
-    
+ */
 }
 
 - (void)didReceiveMemoryWarning {

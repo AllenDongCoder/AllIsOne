@@ -2225,7 +2225,7 @@
 				TargetAttributes = {
 					3E1F30621E5D6E8E004B0F05 = {
 						CreatedOnToolsVersion = 8.2.1;
-						DevelopmentTeam = E6D8GWCPFQ;
+						DevelopmentTeam = L5TRHD689W;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.Keychain = {
@@ -3064,9 +3064,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = OneIsAll/OneIsAll.entitlements;
-				DEVELOPMENT_TEAM = E6D8GWCPFQ;
+				DEVELOPMENT_TEAM = L5TRHD689W;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/OneIsAll/PrefixHeader.pch";
 				INFOPLIST_FILE = OneIsAll/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = Allen.OneIsAll;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -3079,9 +3080,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = OneIsAll/OneIsAll.entitlements;
-				DEVELOPMENT_TEAM = E6D8GWCPFQ;
+				DEVELOPMENT_TEAM = L5TRHD689W;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/OneIsAll/PrefixHeader.pch";
 				INFOPLIST_FILE = OneIsAll/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = Allen.OneIsAll;
 				PRODUCT_NAME = "$(TARGET_NAME)";
