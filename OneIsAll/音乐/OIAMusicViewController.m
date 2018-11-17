@@ -9,7 +9,7 @@
 #import "OIAMusicViewController.h"
 
 @interface OIAMusicViewController ()
-
+@property(nonatomic,strong) RACDisposable * ssdispos  ;
 @end
 
 @implementation OIAMusicViewController
@@ -26,8 +26,34 @@
     UIView * view = [arr lastObject];
     view.frame = CGRectMake(10, 30, 100, 100);
     [self.view addSubview:view];
+    __block int a = 10;
+ self.ssdispos = [[[[[RACSignal interval:1.0f onScheduler:[RACScheduler mainThreadScheduler]] startWith:@"start"] map:^id(id value) {
+      a = a-  1;
+      return @(a);
+    }] takeUntilBlock:^BOOL(id x) {
+        return x <= 0;
+    }]   subscribeNext:^(id x) {
+        NSLog(@"schele = %@",x );
+        if ([x integerValue] < 0 ) {
+            [self.ssdispos dispose];
+        }
+        
+    }];
     
-    // Do any additional setup after loading the view.
+    
+//    RACSignal * countsingal =  [[[[RACSignal interval:1
+//                                          onScheduler:[RACScheduler mainThreadScheduler]]
+//                                  startWith:[NSDate date]]
+//                                 scanWithStart:@(10) reduce:^id(NSNumber *running, id next) {
+//                                     NSLog(@"running = %@",running);
+//                                     return @(running.integerValue - 1);
+//                                 }] takeUntilBlock:^BOOL(NSNumber *x) {
+//                                     return x.integerValue < 0;
+//                                 }];
+//    [countsingal subscribeNext:^(id x) {
+//        NSLog(@"222");
+//    }];
+
 }
 
 - (void)didReceiveMemoryWarning {

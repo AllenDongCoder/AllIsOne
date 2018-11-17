@@ -23,7 +23,7 @@
     [self.view addSubview:tf];
     
     
-    UIButton * btn =[ UIButton buttonWithType:UIButtonTypeCustom];
+    UIButton * btn = [UIButton buttonWithType:UIButtonTypeCustom];
     [btn setTitle:@"按钮" forState:UIControlStateNormal];
     [btn setBackgroundColor:[UIColor colorWithRed:58/255.0f green:157/255.0f blue:255/255.0f alpha:1.0f]];
     btn.frame =  CGRectMake(30, 100, 100, 30);
@@ -50,33 +50,59 @@
 //
 //        }];
 //    }];
-   
-    RACSignal * countSinal = [[[[RACSignal interval:1
-                                        onScheduler:[RACScheduler mainThreadScheduler]]
-                                startWith:[NSDate date]]
-                               scanWithStart:@(60) reduce:^id(NSNumber *running, id next) {
-                                   return @(running.integerValue - 1);
-                               }] takeUntilBlock:^BOOL(NSNumber *x) {
-                                   return x.integerValue < 0;
-                               }];
-    RACSignal * (^ CountBlock)(UIButton *) = ^RACSignal *(UIButton * btn){
+    RACSignal * (^countBlock)(UIButton *) = ^RACSignal *(UIButton * btn){
+      RACSignal * countsingal =  [[[[RACSignal interval:1
+                          onScheduler:[RACScheduler mainThreadScheduler]]
+                  startWith:[NSDate date]]
+                 scanWithStart:@(10) reduce:^id(NSNumber *running, id next) {
+                     NSLog(@"running = %@",running); 
+                     return @(running.integerValue - 1);
+                 }] takeUntilBlock:^BOOL(NSNumber *x) {
+                     return x.integerValue < 0;
+                 }];
+        return countsingal;
+    };
+    
+    
+    
+    RACSignal * (^CountBlock)(UIButton *) = ^RACSignal *(UIButton * btn){
+        RACSignal * timeSigal =  [countBlock(btn) map:^id(NSNumber * value) {
+            return [NSString  stringWithFormat:@"剩余%@",value];
+        }];
+        btn.enabled = NO;
+        [btn setBackgroundColor:[UIColor grayColor]];
+        __block id<RACSubscriber> saveSubscriber = nil;
+        RACSignal *resetStringSignal =
+        [RACSignal createSignal:^RACDisposable *(id<RACSubscriber>  subscriber) {
+            saveSubscriber = subscriber;
+            return nil;
+        }];
         
-        return countSinal;
+//        [timeSigal subscribeCompleted:^{
+//            btn.enabled = YES;
+//            [btn setBackgroundColor:[UIColor colorWithRed:58/255.0f green:157/255.0f blue:255/255.0f alpha:1.0f]];
+//            [saveSubscriber sendNext:@"按钮"];
+//            [saveSubscriber sendCompleted];
+//            NSLog(@"timer singal complte");
+//        }];
+    
+        [btn rac_liftSelector:@selector(setTitle:forState:)
+                  withSignals:[RACSignal merge:@[timeSigal,resetStringSignal]],
+         [RACSignal return:@(UIControlStateNormal)], nil];
+        return timeSigal;
     };
     
 
-    btn.rac_command = [[RACCommand alloc] initWithEnabled:enAbleSingal signalBlock:^RACSignal *(id input) {
-        NSLog(@"input = %@",input);
-        return CountBlock(btn);
-        //        [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
-        //            NSLog(@"do something ");
-        //            [subscriber sendNext:@"something"];
-        //            [subscriber sendCompleted];
-        //            return  [RACDisposable disposableWithBlock:^{
-        //
-        //            }];
-        //        }];
-    }];
+    btn.rac_command =  [[RACCommand alloc] initWithEnabled:enAbleSingal signalBlock:^RACSignal *(id input) {
+                NSLog(@"input = %@",input);
+                return CountBlock(btn);
+            }];
+    
+//    [[RACCommand alloc] initWithSignalBlock:^RACSignal *(UIButton * input) {
+//        return CountBlock(input);
+//    }];
+    
+//
     /**
     [[btn rac_signalForControlEvents:UIControlEventTouchUpInside]
     subscribeNext:^(id x) {
@@ -106,20 +132,4 @@
     }];
  */
 }
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
-
 @end
