@@ -94,6 +94,7 @@
             NSLog(@"跳转");
         }
         NSLog(@"sign in result :%@",x);
+        [self.view endEditing:YES];
     }];
     
     int result = [NSObject makeCaculators:^void(CaculatorMaker * make) {
